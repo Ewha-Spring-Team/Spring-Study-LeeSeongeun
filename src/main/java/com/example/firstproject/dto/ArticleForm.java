@@ -1,5 +1,7 @@
 package com.example.firstproject.dto;
 
+import com.example.firstproject.entity.Article;
+
 public class ArticleForm {
   private String title; // 제목을 받을 필드
   private String content; // 내용을 받을 필드
@@ -17,5 +19,10 @@ public class ArticleForm {
         "title='" + title + '\'' +
         ", content='" + content + '\'' +
         '}';
+  }
+
+  // 폼 데이터를 담은 DTO 객체를 엔티티로 반환
+  public Article toEntity() {
+    return new Article(null, title, content); // 생성자 입력 양식에 맞게 작성
   }
 }
