@@ -1,12 +1,16 @@
 package com.example.firstproject.entity;
 
-import java.lang.annotation.Inherited;
+import lombok.AllArgsConstructor; // AllArgsConstructor 패키지 임포트
+import lombok.ToString; // ToString 패키지 임포트
 
+import java.lang.annotation.Inherited;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.Id;
 
+@AllArgsConstructor
+@ToString
 @Entity // 이 클래스가 엔티티임을 선언하기 위해 어노테이션을 붙임
 public class Article {
 
@@ -15,24 +19,6 @@ public class Article {
   private Long id;
   @Column // title 필드 선언, DB 테이블의 title 열과 연결됨
   private String title;
-
-  // Article 생성자 추가
-  public Article(Long id, String title, String content) {
-    this.id = id;
-    this.title = title;
-    this.content = content;
-  }
-
-  // toString() 메서드 추가
-  @Override
-  public String toString() {
-    return "Article{" +
-        "id=" + id +
-        ", title='" + title + '\'' +
-        ", content='" + content + '\'' +
-        '}';
-  }
-
   @Column // content 필드 선언, DB 테이블의 content 열과 연결됨
   private String content;
 }
