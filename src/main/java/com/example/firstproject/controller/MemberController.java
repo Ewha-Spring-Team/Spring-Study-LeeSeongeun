@@ -1,5 +1,6 @@
 package com.example.firstproject.controller;
 
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -8,6 +9,7 @@ import com.example.firstproject.repository.MemberRepository;
 import com.example.firstproject.entity.Member;
 import org.springframework.beans.factory.annotation.Autowired;
 
+@Slf4j // 로깅 기능을 위한 어노테이션 추가
 @Controller // 컨트롤러 선언
 public class MemberController {
 
@@ -22,15 +24,15 @@ public class MemberController {
   // 폼 데이터를 받아오는 작업
   @PostMapping("/join") // url 요청 접수
   public String joinMember(MemberForm form) {
-    System.out.println(form.toString());
+    log.info(form.toString());
 
     // DTO를 엔티티로 변환
     Member member = form.toEntity();
-    System.out.println(member.toString());
+    log.info(member.toString());
 
     // 리파지터리로 엔티티를 DB에 저장
     Member saved = memberRepository.save(member);
-    System.out.println(saved.toString());
+    log.info(saved.toString());
     return "";
   }
 }
