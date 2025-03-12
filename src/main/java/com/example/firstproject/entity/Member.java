@@ -26,6 +26,7 @@ public class Member {
     this.password = password;
   }
 
+  // 오버라이드
   @Override
   public String toString() {
     return "Member{" +

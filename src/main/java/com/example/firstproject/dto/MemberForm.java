@@ -6,7 +6,7 @@ public class MemberForm {
   private String email; // 이메일을 받을 필드
   private String password; // 비밀번호를 받을 필드
 
-  // 전송받은 이메일과 비밀번호를 필드에 저장하는 생성자 추가]
+  // 전송받은 이메일과 비밀번호를 필드에 저장하는 생성자 추가
   public MemberForm(String email, String password) {
     this.email = email;
     this.password = password;

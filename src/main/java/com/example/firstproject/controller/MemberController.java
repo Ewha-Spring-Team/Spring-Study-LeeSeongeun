@@ -11,7 +11,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 @Controller // 컨트롤러 선언
 public class MemberController {
 
-  @Autowired // 스프링 부트가 미리 생성해 둔 리파지터리 객체 주입
+  @Autowired // 스프링 부트가 미리 생성한 둔 리파지터리 객체 주입
   private MemberRepository memberRepository;
 
   @GetMapping("/members/new") // url 요청 접수
