@@ -1,16 +1,17 @@
 package com.example.firstproject.dto;
 
-import lombok.AllArgsConstructor; // AllArgsConstructor 패키지 임포트
-import lombok.ToString; // ToString 패키지 임포트
+import lombok.AllArgsConstructor;
+import lombok.ToString;
 import com.example.firstproject.entity.Member;
 
-@AllArgsConstructor // 새 어노테이션 추가
-@ToString // 새 어노테이션 추가
+@AllArgsConstructor
+@ToString
 public class MemberForm {
-  private String email; // 이메일을 받을 필드
-  private String password; // 비밀번호를 받을 필드
+  private Long id; // id 필드 추가
+  private String email;
+  private String password;
 
   public Member toEntity() {
-    return new Member(null, email, password);
+    return new Member(id, email, password);
   }
 }
