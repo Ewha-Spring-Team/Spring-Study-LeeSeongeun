@@ -2,6 +2,7 @@ package com.example.firstproject.controller;
 
 import java.util.ArrayList;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -37,21 +38,21 @@ public class MemberController {
   }
 
   @GetMapping("/members/{id}")
-  public String show(@PathVariable Long id, Model model) { // ㄱ, ㄴ 정답
+  public String show(@PathVariable Long id, Model model) {
     // 1. id를 조회해 데이터 가져오기
     Member memberEntity = memberRepository.findById(id).orElse(null); // ㄷ 정답
     // 2. 모델에 데이터 등록하기
-    model.addAttribute("member", memberEntity); // ㄹ 정답
+    model.addAttribute("member", memberEntity);
     // 3. 뷰 페이지 반환하기
     return "members/show";
   }
 
   @GetMapping("/members")
-  public String index(Model model) { // ㅁ 정답
+  public String index(Model model) {
     // 1. 모든 데이터 가져오기
     ArrayList<Member> memberEntityList = memberRepository.findAll(); // ㅂ 정답
     // 2. 모델에 데이터 등록하기
-    model.addAttribute("memberList", memberEntityList); // ㅅ 정답
+    model.addAttribute("memberList", memberEntityList);
     // 3. 뷰 페이지 설정하기기
     return "members/index";
   }
@@ -81,5 +82,20 @@ public class MemberController {
     }
     // 3. 수정 결과 페이지로 리다이렉트하기
     return "redirect:/members/" + memberEntity.getId();
+  }
+
+  @GetMapping("members/{id}/delete")
+  public String delete(@PathVariable Long id, RedirectAttributes rttr) {
+    log.info("삭제 요청이 들어왔습니다!!");
+    // 1. 삭제할 대상 가져오기
+    Member target = memberRepository.findById(id).orElse(null);
+    log.info(target.toString());
+    // 2. 대상 엔티티 삭제하기
+    if (target != null) { // 삭제할 대상이 있는지 확인
+      memberRepository.delete(target); // delete() 메서드로 대상 삭제
+      rttr.addFlashAttribute("msg", "삭제되었습니다.");
+    }
+    // 3. 결과 페이지로 리다이렉트하기
+    return "redirect:/members";
   }
 }
