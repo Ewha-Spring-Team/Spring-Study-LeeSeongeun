@@ -4,6 +4,7 @@ import java.util.List;
 import lombok.extern.slf4j.Slf4j;
 import com.example.firstproject.dto.ArticleForm;
 import com.example.firstproject.entity.Article;
+import com.example.firstproject.service.ArticleService;
 import com.example.firstproject.repository.ArticleRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -21,25 +22,26 @@ import org.springframework.http.HttpStatus;
 
 public class ArticleApiController {
   @Autowired
-  private ArticleRepository articleService; // 서비스 객체 주입
+  private ArticleService articleService; // 서비스 객체 주입
 
-  // // GET
-  // @GetMapping("/api/articles")
-  // public List<Article> index() {
-  // return articleRepository.findAll();
-  // }
+  // GET
+  @GetMapping("/api/articles")
+  public List<Article> index() {
+    return articleService.index();
+  }
 
-  // @GetMapping("/api/articles/{id}")
-  // public Article show(@PathVariable Long id) {
-  // return articleRepository.findById(id).orElse(null);
-  // }
+  @GetMapping("/api/articles/{id}")
+  public Article show(@PathVariable Long id) {
+    return articleService.show(id);
+  }
 
-  // // POST
-  // @PostMapping("/api/articles")
-  // public Article create(@RequestBody ArticleForm dto) {
-  // Article article = dto.toEntity();
-  // return articleRepository.save(article);
-  // }
+  // POST
+  @PostMapping("/api/articles")
+  public ResponseEntity<Article> create(@RequestBody ArticleForm dto) { // 서비스로 게시글 생성
+    Article created = articleService.create(dto); // 객체 이름 변경
+    return (created != null) ? ResponseEntity.status(HttpStatus.OK).body(created)
+        : ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
+  }
 
   // // PATCH
   // @PatchMapping("/api/articles/{id}")
