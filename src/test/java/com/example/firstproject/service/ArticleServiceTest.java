@@ -4,9 +4,12 @@ import java.util.List;
 import java.util.ArrayList;
 import java.util.Arrays;
 import org.junit.jupiter.api.Test;
+
+import com.example.firstproject.dto.ArticleForm;
 import com.example.firstproject.entity.Article;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.transaction.annotation.Transactional;
 
 import static org.junit.jupiter.api.Assertions.*; // 앞으로 사용할 수 있는 패키지 임포트
 
@@ -52,12 +55,31 @@ class ArticleServiceTest {
   }
 
   @Test
-  void create_성공() {
-
+  @Transactional
+  void create_성공_title과_content만_있는_dto_입력() {
+    // 1. 예상 데이터
+    String title = "라라라라";
+    String content = "4444";
+    ArticleForm dto = new ArticleForm(null, title, content);
+    Article expected = new Article(4L, title, content);
+    // 2. 실제 데이터
+    Article article = articleService.create(dto);
+    // 3. 비교 및 검증
+    assertEquals(expected.toString(), article.toString());
   }
 
   @Test
+  @Transactional
   void create_실패() {
-
+    // 1. 예상 데이터
+    Long id = 4L;
+    String title = "라라라라";
+    String content = "4444";
+    ArticleForm dto = new ArticleForm(id, title, content);
+    Article expected = null;
+    // 2. 실제 데이터
+    Article article = articleService.create(dto);
+    // 3. 비교 및 검증
+    assertEquals(expected, article);
   }
 }
