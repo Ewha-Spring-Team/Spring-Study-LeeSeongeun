@@ -11,6 +11,8 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.example.firstproject.dto.CommentDto;
 import com.example.firstproject.service.CommentService;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 
 @RestController
 public class CommentApiController {
@@ -25,7 +27,16 @@ public class CommentApiController {
     // 결과 응답
     return ResponseEntity.status(HttpStatus.OK).body(dtos);
   }
+
   // 2. 댓글 생성
+  @PostMapping("/api/articles/{articleId}/comments")
+  public ResponseEntity<CommentDto> create(@PathVariable Long articleId, @RequestBody CommentDto dto) {
+    // 서비스에 위임
+    CommentDto createdDto = commentService.create(articleId, dto);
+    // 결과 응답
+    return ResponseEntity.status(HttpStatus.OK).body(createdDto);
+  }
+
   // 3. 댓글 수정
   // 4. 댓글 삭제
 }
